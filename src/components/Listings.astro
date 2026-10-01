@@ -1,0 +1,27 @@
+---
+const endpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/listings`;
+---
+<main id="listings-app" data-endpoint={endpoint}>
+ <p class="eyebrow">ANDERSON GROUP INC</p>
+ <h1>Find a place to call home.</h1>
+ <p class="intro">Explore homes for sale across California.</p>
+ <form id="filters" role="search" aria-label="Search homes">
+  <label class="search">Search properties<input id="query" type="search" placeholder="Search by title, address, or city" /></label>
+  <label>Location<select id="location"><option value="">All locations</option></select></label>
+  <label>Minimum price<input id="min" type="number" min="0" step="any" placeholder="No minimum" inputmode="numeric" /></label>
+  <label>Maximum price<input id="max" type="number" min="0" step="any" placeholder="No maximum" inputmode="numeric" /></label>
+  <button type="reset" class="reset">Clear filters</button>
+ </form>
+ <p id="range-error" role="status" hidden>Minimum price must be less than or equal to maximum price.</p>
+ <div class="results-header"><strong id="count" role="status">Loading homes…</strong><span id="sync"></span></div>
+ <div id="error" role="alert" hidden><span id="error-text"></span> <button id="retry" type="button">Try again</button></div>
+ <section id="cards" aria-label="Property listings" aria-busy="true"></section>
+ <div id="empty" hidden><h2>No homes match your search.</h2><p>Try a different location or a wider price range.</p><button id="clear-empty" type="button">Clear filters</button></div>
+ <noscript>Please enable JavaScript to browse and filter homes.</noscript>
+</main>
+<script>
+ import '../lib/browser.mjs';
+</script>
+<style is:global>
+ #listings-app{max-width:1280px;margin:auto;padding:64px 36px 80px}#listings-app .eyebrow{font-size:12px;letter-spacing:2px;font-weight:700;margin:0 0 24px;color:#67635f}#listings-app h1{font-size:clamp(36px,5vw,58px);line-height:1.07;letter-spacing:-2px;margin:0 0 16px}#listings-app .intro{color:#6a6661;font-size:18px;margin:0 0 40px}#filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}#filters .search{grid-column:span 2}#filters label{display:flex;flex-direction:column;gap:9px;font-size:13px;font-weight:700}#listings-app input,#listings-app select{font:inherit;font-size:16px;font-weight:400;color:#242321;background:white;border:1.5px solid #d8d5d0;border-radius:13px;padding:17px 18px;width:100%;min-width:0}#listings-app button{font:inherit;cursor:pointer;border:0;border-radius:30px;padding:14px 22px;background:#3e3a36;color:#fff;font-weight:700}#filters .reset{align-self:end;justify-self:end;background:#f0ede9;color:#3e3a36;margin-bottom:3px}#listings-app :focus-visible{outline:3px solid #7a5734;outline-offset:3px}#listings-app .results-header{display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid #dedbd7;margin-top:34px;padding-bottom:21px}#count{font-size:19px}#sync{font-size:12px;color:#706b65}#cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 24px;padding-top:28px}#cards article{border:1px solid #e1ded9;border-radius:17px;overflow:hidden;background:#fff}#cards .photo{position:relative;aspect-ratio:1.5;background:#ece9e3;display:grid;place-items:center;color:#77716a}#cards img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}#cards .badge{position:absolute;left:16px;top:16px;background:#fff;border-radius:30px;padding:8px 11px;font-size:11px;font-weight:700}#cards .details{padding:23px}#cards .price{font-size:27px;font-weight:700;letter-spacing:-.7px;margin:0 0 12px}#cards h2{font-size:18px;margin:0 0 8px}#cards .address{color:#6d6862;font-size:14px;line-height:1.6;min-height:45px;margin:0 0 19px}#cards .facts{display:flex;flex-wrap:wrap;gap:14px;border-top:1px solid #eeece8;padding-top:17px;font-size:13px;color:#514c46}#empty{text-align:center;padding:70px 16px;background:#f7f5f2;border-radius:16px;margin-top:24px}#error{padding:18px;background:#fff3e9;border-radius:12px;margin-top:20px}#range-error{color:#9a3412}#listings-app [hidden]{display:none!important}@media(max-width:900px){#cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){#listings-app{padding:36px 20px}#filters{grid-template-columns:1fr 1fr}#filters .search,#filters label:nth-child(2){grid-column:span 2}#filters .reset{grid-column:span 2}#cards{grid-template-columns:1fr}#listings-app .results-header{align-items:start;flex-direction:column}#listings-app h1{letter-spacing:-1px}}
+</style>
