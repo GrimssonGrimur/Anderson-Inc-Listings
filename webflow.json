@@ -1,0 +1,10 @@
+{
+  "devlink-export": {
+    "rootDir": "./webflow",
+    "components": "Navigation|Footer",
+    "componentGroups": ".*",
+    "ts": true,
+    "cssScopes": true,
+    "relativeHrefRoot": "/"
+  }
+}
