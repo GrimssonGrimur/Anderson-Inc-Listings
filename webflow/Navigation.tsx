@@ -77,7 +77,7 @@ export function Navigation({}: NavigationProps) {
               className={"nav_logo"}
               id={"w-node-_8af1b81b-694b-7796-7a6b-63978622a29b-7e6e1193"}
               options={{
-                href: "#",
+                href: "/",
               }}
             >
               <Image

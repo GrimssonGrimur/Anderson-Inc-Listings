@@ -1,13 +1,21 @@
 import type { APIRoute } from 'astro';
-import { env as cfEnv } from 'cloudflare:workers';
 import samples from '../../data/listings.json';
 import { normalize, fetchAirtable } from '../../lib/listings.mjs';
 
 export const prerender = false;
 
+async function getCloudEnv(): Promise<Record<string, unknown>> {
+  try {
+    const mod = await import('cloudflare:workers');
+    return (mod.env as Record<string, unknown>) ?? {};
+  } catch {
+    return {};
+  }
+}
+
 export const GET: APIRoute = async () => {
   try {
-    const env: any = { ...import.meta.env, ...cfEnv };
+    const env: any = { ...import.meta.env, ...(await getCloudEnv()) };
     const source = env.DATA_SOURCE || 'mock';
     if (!['mock', 'airtable'].includes(source)) throw new Error('Invalid data source');
     const listings = source === 'airtable' ? await fetchAirtable(env) : samples.map(normalize);
