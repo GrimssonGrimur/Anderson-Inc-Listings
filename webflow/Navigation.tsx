@@ -901,7 +901,7 @@ export function Navigation({}: NavigationProps) {
                       href: "/listings",
                     }}
                   >
-                    <Block tag={"div"}>{"Listings"}</Block>
+                    <Block tag={"div"}>{"Find a Home"}</Block>
                   </Link>
                 </ListItem>
               </List>
